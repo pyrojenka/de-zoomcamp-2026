@@ -53,6 +53,14 @@ Services started include:
 
 Open the Kestra UI, go to Flows → Upload or create flows using the YAML files under `flows/`.
 
+### Running setup flows: `01_gcp_kv` and `02_gcp_setup` 🔁
+
+- `01_gcp_kv` — sets Kestra key-value entries required by other flows: `GCP_PROJECT_ID`, `GCP_LOCATION`, `GCP_BUCKET_NAME`, and `GCP_DATASET`. Before running, open the flow in the Kestra UI and update `GCP_PROJECT_ID` and `GCP_BUCKET_NAME` (the bucket name must be globally unique and replace the TODO values). Run this flow to store those keys.
+
+- `02_gcp_setup` — creates the GCS bucket and BigQuery dataset. This flow reads values from `kv(...)` and uses the Kestra secret named `GCP_SERVICE_ACCOUNT` for credentials. Ensure your `.env_encoded` includes `SECRET_GCP_SERVICE_ACCOUNT` (or create a Kestra secret called `GCP_SERVICE_ACCOUNT`) and that the service account has permissions to create buckets and datasets.
+
+**Run order:** run `01_gcp_kv` first, then `02_gcp_setup`. Use the **Validate** button in the UI before saving/running any flow.
+
 ## How to run the flow orchestrator ▶️
 
 - `04_flow_orchestrator.yaml` is the parent flow that triggers taxi flows for given taxi types and months.

@@ -2,7 +2,7 @@ id: 04_flow_orchestrator
 namespace: zoomcamp
 
 tasks:
-# 1. Цикл для заповнення всього 2020 року (24 запусків)
+# 1. Cycle to backfill entire 2020 (24 runs)
   - id: backfill_2020
     type: io.kestra.plugin.core.flow.ForEach
     values: ["green", "yellow"]
@@ -22,7 +22,7 @@ tasks:
             wait: true # Wait for one month's run to finish before starting the next
             transmitFailed: true # If the subflow fails, stop this execution as well
 
-# 2. Цикл для заповнення всього 2021 року (14 запусків)
+# 2. Cycle to backfill entire 2021 (14 runs)
   - id: backfill_2021
     type: io.kestra.plugin.core.flow.ForEach
     values: ["green", "yellow"]
