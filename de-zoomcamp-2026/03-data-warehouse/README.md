@@ -29,7 +29,7 @@ OPTIONS (
 **Create Regular (Materialized) Table:**
 
 ```sql
-CREATE OR REPLACE TABLE `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned` AS
+CREATE OR REPLACE TABLE `taxi-rides-ny.nytaxi.native_yellow_tripdata` AS
 SELECT * FROM `taxi-rides-ny.nytaxi.external_yellow_tripdata`;
 ```
 
@@ -39,7 +39,7 @@ SELECT * FROM `taxi-rides-ny.nytaxi.external_yellow_tripdata`;
 
 **Query:**
 ```sql
-SELECT count(*) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
+SELECT count(*) FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`;
 ```
 
 **Answer:** 20,332,093
@@ -49,7 +49,7 @@ SELECT count(*) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
 **Query:**
 ```sql
 SELECT COUNT(DISTINCT(PULocationID)) FROM `taxi-rides-ny.nytaxi.external_yellow_tripdata`;
-SELECT COUNT(DISTINCT(PULocationID)) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
+SELECT COUNT(DISTINCT(PULocationID)) FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`;
 ```
 
 **Answer:** 0 MB for the External Table and 155.12 MB for the Materialized Table
@@ -59,10 +59,10 @@ SELECT COUNT(DISTINCT(PULocationID)) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_
 **Queries:**
 ```sql
 -- Query 1
-SELECT PULocationID FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
+SELECT PULocationID FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`;
 
 -- Query 2
-SELECT PULocationID, DOLocationID FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
+SELECT PULocationID, DOLocationID FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`;
 ```
 
 **Answer:** BigQuery is a columnar database. Querying two columns requires reading more data than querying one.
@@ -71,7 +71,7 @@ SELECT PULocationID, DOLocationID FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non
 
 **Query:**
 ```sql
-SELECT count(*) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned` WHERE fare_amount = 0;
+SELECT count(*) FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata` WHERE fare_amount = 0;
 ```
 
 **Answer:** 8,333
@@ -93,7 +93,7 @@ SELECT * FROM `taxi-rides-ny.nytaxi.external_yellow_tripdata`;
 **Query:**
 ```sql
 SELECT DISTINCT VendorID
-FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`
+FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`
 WHERE tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15';
 
 SELECT DISTINCT VendorID
@@ -115,7 +115,7 @@ WHERE tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15';
 
 **Query:**
 ```sql
-SELECT count(*) FROM `taxi-rides-ny.nytaxi.yellow_tripdata_non_partitioned`;
+SELECT count(*) FROM `taxi-rides-ny.nytaxi.native_yellow_tripdata`;
 ```
 
 **Answer:** 0 Bytes. This is because `COUNT(*)` on a non-external table retrieves metadata statistics without scanning the actual data.
