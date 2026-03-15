@@ -137,7 +137,8 @@ celerybeat.pid
 # Environments
 .env_encoded
 .env
-service-account.json
+service-account.
+gcs.json
 .envrc
 .venv
 env/
@@ -207,3 +208,9 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
+logs/queries
